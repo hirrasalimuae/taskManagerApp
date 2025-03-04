@@ -102,11 +102,14 @@ Settings
 
 
 # Requirements
-Xcode 15 or later.
 
-iOS 17 or later.
+Xcode  16.2 or later.
 
-Swift 5.9 or later.
+iOS 18 or later.
+
+Swift 5.10 or later.
+
+SwiftUI 5  or later.
 
 # Installation
 Clone the repository:
