@@ -89,7 +89,7 @@ Placeholder shimmer effect while Core Data loads initially.
 
 # Screenshots
 Task List
-![Simulator Screenshot - Clone 4 of iPhone 13 - 2025-03-04 at 22 58 25](https://github.com/user-attachments/assets/29b31ef2-f411-474f-b1f2-1372fc56d3ae)
+![simulator_screenshot_D2A8DA35-07BF-415B-B4C5-4D04888C740D](https://github.com/user-attachments/assets/23fe7374-bcd8-4c1a-98bc-dead761bc780)
 
 Task Creation	
 ![Simulator Screenshot - Clone 4 of iPhone 13 - 2025-03-04 at 22 58 54](https://github.com/user-attachments/assets/69acf418-a01a-4767-987d-48d022727f76)
