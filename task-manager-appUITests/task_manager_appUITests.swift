@@ -66,13 +66,13 @@ final class task_manager_appUITests: XCTestCase {
         taskCell.swipeLeft()
 
         // Tap the Delte button
-        let completeButton = app.buttons["Delete"]
-        XCTAssertTrue(completeButton.waitForExistence(timeout: 5), "Complete button does not exist")
-        completeButton.tap()
+        let deleteButton = app.buttons["Delete"]
+        XCTAssertTrue(deleteButton.waitForExistence(timeout: 5), "Complete button does not exist")
+        deleteButton.tap()
 
 
         // Verify the task is removed
-        XCTAssertFalse(completeButton.exists)
+        XCTAssertFalse(deleteButton.exists)
     }
     
     func testTaskCompletionUpdatesProgressRing() {

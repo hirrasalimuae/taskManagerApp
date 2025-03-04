@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7168A7272D7791E40031A440 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 7168A7262D7791E40031A440 /* InlineSnapshotTesting */; };
+		7168A7292D7791E40031A440 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 7168A7282D7791E40031A440 /* SnapshotTesting */; };
+		7168A72B2D7791E40031A440 /* SnapshotTestingCustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 7168A72A2D7791E40031A440 /* SnapshotTestingCustomDump */; };
 		71A7A3042D774AF0001A50E2 /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 71A7A3032D774AF0001A50E2 /* InlineSnapshotTesting */; };
 		71A7A3062D774AF0001A50E2 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 71A7A3052D774AF0001A50E2 /* SnapshotTesting */; };
 		71A7A3082D774AF0001A50E2 /* SnapshotTestingCustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 71A7A3072D774AF0001A50E2 /* SnapshotTestingCustomDump */; };
@@ -78,6 +81,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7168A72B2D7791E40031A440 /* SnapshotTestingCustomDump in Frameworks */,
+				7168A7272D7791E40031A440 /* InlineSnapshotTesting in Frameworks */,
+				7168A7292D7791E40031A440 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +106,7 @@
 				712858962D70DAB5003ECF1B /* task-manager-app */,
 				712858AC2D70DABA003ECF1B /* task-manager-appTests */,
 				712858B62D70DABB003ECF1B /* task-manager-appUITests */,
+				7168A7252D7791E40031A440 /* Frameworks */,
 				712858952D70DAB5003ECF1B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +119,13 @@
 				712858B32D70DABB003ECF1B /* task-manager-appUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7168A7252D7791E40031A440 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +171,9 @@
 			);
 			name = "task-manager-appTests";
 			packageProductDependencies = (
+				7168A7262D7791E40031A440 /* InlineSnapshotTesting */,
+				7168A7282D7791E40031A440 /* SnapshotTesting */,
+				7168A72A2D7791E40031A440 /* SnapshotTestingCustomDump */,
 			);
 			productName = "task-manager-appTests";
 			productReference = 712858A92D70DABA003ECF1B /* task-manager-appTests.xctest */;
@@ -599,6 +616,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7168A7262D7791E40031A440 /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 71A7A3022D774AF0001A50E2 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		7168A7282D7791E40031A440 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 71A7A3022D774AF0001A50E2 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		7168A72A2D7791E40031A440 /* SnapshotTestingCustomDump */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 71A7A3022D774AF0001A50E2 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTestingCustomDump;
+		};
 		71A7A3032D774AF0001A50E2 /* InlineSnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 71A7A3022D774AF0001A50E2 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;

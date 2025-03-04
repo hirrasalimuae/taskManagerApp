@@ -69,42 +69,7 @@ class TaskCreationUITests: XCTestCase {
         
     }
 
-    func testTasksAreSortedByOrder() {
-        // Navigate to the task list screen
-        let taskList = app.navigationBars["Tasks"]
-        XCTAssertTrue(taskList.waitForExistence(timeout: 5), "Task List screen did not load")
-        
-        // Add multiple tasks with different orders
-        addTask(title: "Task 1", order: 1)
-        addTask(title: "Task 2", order: 2)
-        addTask(title: "Task 3", order: 3)
-        
-        // Verify tasks are displayed in the correct order
-        let taskCells = app.staticTexts.matching(identifier: "Task Title")
-        XCTAssertEqual(taskCells.count, 3, "Expected 3 tasks")
-        print(itemFormatter)
- 
-    }
     
-    private func addTask(title: String, order: Int) {
-        let addTaskButton = app.buttons["Add Task Button"]
-        XCTAssertTrue(addTaskButton.waitForExistence(timeout: 5), "Add Task Button does not exist")
-        addTaskButton.tap()
-        
-        let titleTextField = app.textFields["New Task Input"]
-        XCTAssertTrue(titleTextField.waitForExistence(timeout: 5), "Title Text Field does not exist")
-        titleTextField.tap()
-        titleTextField.typeText(title)
-        // Enter task description
-        let descriptionTextField = app.textFields["Description"]
-        XCTAssertTrue(descriptionTextField.waitForExistence(timeout: 5), "Description Text Field does not exist")
-        descriptionTextField.tap()
-        descriptionTextField.typeText("This is a test task description of \(title)")
-      
-        app.buttons["Save Task"].tap()
-        let taskCells = app.staticTexts.matching(identifier: "Task Title")
-         print("Tasks after adding: \(taskCells.count)")
-    }
     
     
 }

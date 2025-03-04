@@ -19,7 +19,17 @@ struct task_manager_app: App {
             TaskListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext) 
                 .tint(Color(accentColor)) // Apply the selected accent color
-                .preferredColorScheme(isDarkMode ? .dark : .light)
+                .preferredColorScheme(isDarkMode ? .dark : .light)   .onAppear {
+                    if ProcessInfo.processInfo.arguments.contains("-ui-testing") {
+                        // Load mock data for UI testing
+                        loadMockData()
+                    }
+                }
+            
         }
     }
+    private func loadMockData() {
+            let context = PersistenceController.preview.container.viewContext
+            // Add mock tasks here
+        }
 }

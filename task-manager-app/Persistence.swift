@@ -53,4 +53,28 @@ struct PersistenceController {
             }
         }
     }
+    // Add a static `preview` property for testing and SwiftUI previews
+       static var preview: PersistenceController = {
+           let result = PersistenceController(inMemory: true)
+           let viewContext = result.container.viewContext
+
+           // Add mock data for previews or testing
+           for i in 0..<10 {
+               let newTask = Task(context: viewContext)
+               newTask.id = UUID()
+               newTask.title = "Task \(i)"
+               newTask.isCompleted = false
+               newTask.dueDate = Date()
+               newTask.priority = i % 2 == 0 ? "high" : "low"
+           }
+
+           do {
+               try viewContext.save()
+           } catch {
+               let nsError = error as NSError
+               fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+           }
+
+           return result
+       }()
 }
