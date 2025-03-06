@@ -8,9 +8,8 @@ import SwiftUI
 
 struct TaskListView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
     @FetchRequest(
-        sortDescriptors: [] // Remove or adjust sort descriptors
+        sortDescriptors: [SortDescriptor(\.order, order: .forward)]
     ) private var tasks: FetchedResults<Task>
     var taskIdentifiers: [UUID] {
         tasks.map { $0.id ?? UUID() }
@@ -23,71 +22,56 @@ struct TaskListView: View {
     @State private var isPulsing = false
     
     // Sorting and Filtering State
-    @State private var sortOption: SortOption = .priority
-    @State private var filterOption: FilterOption = .all
-    
-    enum SortOption: String, CaseIterable {
-        case priority = "Priority"
-        case dueDate = "Due Date"
-        case title = "Title"
-    }
-    
-    enum FilterOption: String, CaseIterable {
-        case all = "All"
-        case completed = "Completed"
-        case pending = "Pending"
-    }
-    
-    var filteredTasks: [Task] {
-        let filtered: [Task]
-        switch filterOption {
-        case .all:
-            filtered = Array(tasks)
-        case .completed:
-            filtered = tasks.filter { $0.isCompleted }
-        case .pending:
-            filtered = tasks.filter { !$0.isCompleted }
-        }
-        
-        // Debug print
-        for task in filtered {
-            print("Filtered Task: \(task.title ?? ""), Priority: \(task.priority ?? "unknown")")
-        }
-        
-        return filtered
-    }
-
-    var sortedTasks: [Task] {
-        let sorted: [Task]
-        switch sortOption {
-        case .priority:
-            sorted = filteredTasks.sorted { priorityValue(for: $0.priority) > priorityValue(for: $1.priority) }
-        case .dueDate:
-            sorted = filteredTasks.sorted { $0.dueDate ?? Date() < $1.dueDate ?? Date() }
-        case .title:
-            sorted = filteredTasks.sorted { $0.title ?? "" < $1.title ?? "" }
-        }
-        
-        // Debug print
-        for task in sorted {
-            print("Sorted Task: \(task.title ?? ""), Priority: \(task.priority ?? "unknown")")
-        }
-        
-        return sorted
-    }
-
-    private func priorityValue(for priority: String?) -> Int {
-        switch priority?.lowercased() {
-        case "high":
-            return 2
-        case "medium":
-            return 1
-        case "low":
-            return 0
-        default:
-            return -1 // Handle unknown priorities
-        }
-    }
+       @State private var sortOption: SortOption = .priority
+       @State private var filterOption: FilterOption = .all
+       
+       enum SortOption: String, CaseIterable {
+           case priority = "Priority"
+           case dueDate = "Due Date"
+           case title = "Title"
+       }
+       
+       enum FilterOption: String, CaseIterable {
+           case all = "All"
+           case completed = "Completed"
+           case pending = "Pending"
+       }
+       
+       var filteredTasks: [Task] {
+           switch filterOption {
+           case .all:
+               return Array(tasks)
+           case .completed:
+               return tasks.filter { $0.isCompleted }
+           case .pending:
+               return tasks.filter { !$0.isCompleted }
+           }
+       }
+       
+       var sortedTasks: [Task] {
+           switch sortOption {
+           case .priority:
+               return filteredTasks.sorted { priorityValue(for: $0.priority) > priorityValue(for: $1.priority) }
+           case .dueDate:
+               return filteredTasks.sorted { $0.dueDate ?? Date() < $1.dueDate ?? Date() }
+           case .title:
+               return filteredTasks.sorted { $0.title ?? "" < $1.title ?? "" }
+           }
+       }
+       
+       private func priorityValue(for priority: String?) -> Int {
+           switch priority?.lowercased() {
+           case "high":
+               return 2
+           case "medium":
+               return 1
+           case "low":
+               return 0
+           default:
+               return -1
+           }
+       }
+       
     
     var body: some View {
         NavigationStack {
@@ -125,7 +109,8 @@ struct TaskListView: View {
                             .onMove(perform: moveTasks)
                             .accessibilityLabel("Task List")
                             .accessibilityHint("Swipe left or right to delete or complete tasks.")
-                        }.id(sortedTasks)
+                        }.id(sortedTasks) // Force refresh when sortedTasks changes
+
                         .navigationTitle("Tasks")
                     }
                 }
@@ -215,30 +200,30 @@ struct TaskListView: View {
             .padding()
         }
     }
+  
     
+     private func moveTasks(from source: IndexSet, to destination: Int) {
+         // Create a mutable copy of the sortedTasks array
+         var updatedTasks = sortedTasks
+         
+         // Move the tasks within the sortedTasks array
+         updatedTasks.move(fromOffsets: source, toOffset: destination)
+         
+         // Update the order property of each task based on its new position
+         for (index, task) in updatedTasks.enumerated() {
+             task.order = Int16(index)
+         }
+         
+         // Save the changes to the managed object context
+         do {
+             try viewContext.save()
+         } catch {
+             print("Error saving context: \(error)")
+         }
+         
+         // Provide haptic feedback to indicate the move
+         let generator = UIImpactFeedbackGenerator(style: .medium)
+         generator.impactOccurred()
+     }
  
-    
-    private func moveTasks(from source: IndexSet, to destination: Int) {
-        // Create a mutable copy of the sortedTasks array
-        var updatedTasks = sortedTasks
-        
-        // Move the tasks within the sortedTasks array
-        updatedTasks.move(fromOffsets: source, toOffset: destination)
-        
-        // Update the order property of each task based on its new position in the sortedTasks array
-        for (index, task) in updatedTasks.enumerated() {
-            task.order = Int16(index)
-        }
-        
-        // Save the changes to the managed object context
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving context: \(error)")
-        }
-        
-        // Provide haptic feedback to indicate the move
-        let generator = UIImpactFeedbackGenerator(style: .medium)
-        generator.impactOccurred()
-    }
 }
