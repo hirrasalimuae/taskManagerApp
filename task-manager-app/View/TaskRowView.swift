@@ -24,7 +24,6 @@ struct TaskRowView: View {
                     .foregroundColor(.gray)
             }
             HStack {
-//                Spacer()
 
                 Text(task.priority ?? "")
                     .font(.caption)
@@ -92,7 +91,6 @@ struct TaskRowView: View {
                     }
                 }
             } .padding()
-//            .background(Color(.systemBackground))
             .cornerRadius(8)
             .shadow(radius: 2)
             .padding(.horizontal).accessibilityElement(children: .combine) // Combine child elements into a single accessibility element
